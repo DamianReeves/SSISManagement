@@ -47,6 +47,7 @@
     <Compile Include="Core\Services\DbAccessorFactoryBase.cs" />
     <Compile Include="Core\Services\IDbAccessorFactory.cs" />
     <Compile Include="Core\Services\IServiceCollection.cs" />
+    <Compile Include="Data\CatalogDataService.cs" />
     <Compile Include="Data\Catalog\CatalogParameterTypes.cs" />
     <Compile Include="Data\Catalog\Parameters\SetExecutionParameterValueParameters.cs" />
     <Compile Include="Data\Catalog\Parameters\SsisParameterMapper.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="ISsisApplication.cs" />
     <Compile Include="ISsisCatalog.cs" />
     <Compile Include="IDeployedProject.cs" />
+    <Compile Include="LightInject\LightInject.cs" />
     <Compile Include="ModuleInitializer.cs" />
     <Compile Include="PackageExecutionException.cs" />
     <Compile Include="ProjectFacade.cs" />
@@ -89,7 +91,6 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

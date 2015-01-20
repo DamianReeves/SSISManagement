@@ -8,8 +8,8 @@ namespace SqlServer.Management.IntegrationServices.Core.Services
     /// </summary>
     public interface IServiceCollection
     {
-        IDbAccessorFactory DbAccessorFactory { get; }
-        ISqlConnectionStringBuilderFactory SqlConnectionStringBuilderFactory { get; }
+        Func<IDbAccessorFactory> DbAccessorFactoryActivator { get; }
+        Func<ISqlConnectionStringBuilderFactory> SqlConnectionStringBuilderFactoryActivator { get; }
     }
 
     internal class ServiceCollection : IServiceCollection
@@ -25,36 +25,36 @@ namespace SqlServer.Management.IntegrationServices.Core.Services
                 () => new SqlConnectionStringBuilderFactory();
         }
 
-        public IDbAccessorFactory DbAccessorFactory
+        public Func<IDbAccessorFactory> DbAccessorFactoryActivator
         {
-            get { return _dbAccessorFactoryActivator(); }
+            get { return _dbAccessorFactoryActivator; }
         }
 
-        public ISqlConnectionStringBuilderFactory SqlConnectionStringBuilderFactory
+        public Func<ISqlConnectionStringBuilderFactory> SqlConnectionStringBuilderFactoryActivator
         {
-            get { return _sqlConnectionStringBuilderFactoryActivator(); }
+            get { return _sqlConnectionStringBuilderFactoryActivator; }
         }
 
         /// <summary>
         /// Registers a resolver for the <see cref="IDbAccessorFactory"/>
         /// </summary>
-        /// <param name="dbAccessorFactoryResolver"></param>
-        /// <exception cref="ArgumentNullException">The value of 'dbAccessorFactoryResolver' cannot be null. </exception>
-        public void Register(Func<IDbAccessorFactory> dbAccessorFactoryResolver)
+        /// <param name="dbAccessorFactoryActivator"></param>
+        /// <exception cref="ArgumentNullException">The value of 'dbAccessorFactoryActivator' cannot be null. </exception>
+        public void Register(Func<IDbAccessorFactory> dbAccessorFactoryActivator)
         {
-            if (dbAccessorFactoryResolver == null) throw new ArgumentNullException("dbAccessorFactoryResolver");
-            _dbAccessorFactoryActivator = dbAccessorFactoryResolver;
+            if (dbAccessorFactoryActivator == null) throw new ArgumentNullException("dbAccessorFactoryActivator");
+            _dbAccessorFactoryActivator = dbAccessorFactoryActivator;
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="sqlConnectionStringBuilderResolver"></param>
-        /// <exception cref="ArgumentNullException">The value of 'sqlConnectionStringBuilderResolver' cannot be null. </exception>
-        public void Register(Func<ISqlConnectionStringBuilderFactory> sqlConnectionStringBuilderResolver)
+        /// <param name="sqlConnectionStringBuilderActivator"></param>
+        /// <exception cref="ArgumentNullException">The value of 'sqlConnectionStringBuilderActivator' cannot be null. </exception>
+        public void Register(Func<ISqlConnectionStringBuilderFactory> sqlConnectionStringBuilderActivator)
         {
-            if (sqlConnectionStringBuilderResolver == null)
-                throw new ArgumentNullException("sqlConnectionStringBuilderResolver");
-            _sqlConnectionStringBuilderFactoryActivator = sqlConnectionStringBuilderResolver;
+            if (sqlConnectionStringBuilderActivator == null)
+                throw new ArgumentNullException("sqlConnectionStringBuilderActivator");
+            _sqlConnectionStringBuilderFactoryActivator = sqlConnectionStringBuilderActivator;
         }
     }
 }

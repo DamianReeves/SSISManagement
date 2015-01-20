@@ -28,7 +28,7 @@ namespace SqlServer.Management.IntegrationServices
 
         public ISsisCatalog GetCatalog(SqlConnectionStringBuilder connectionStringBuilder)
         {
-            throw new NotImplementedException();
+            return new SsisCatalog(connectionStringBuilder);
         }
     }
 }

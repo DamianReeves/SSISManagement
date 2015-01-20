@@ -13,7 +13,7 @@ namespace SqlServer.Management.IntegrationServices
     public class SsisConfiguration
     {
         private static bool _hasInsightBeenInitialized;
-        private IServiceCollection _services;
+        private readonly IServiceCollection _services;
         static SsisConfiguration()
         {
             EnsureInsightIsInitialized();
