@@ -4,13 +4,11 @@ using System.Data.SqlClient;
 
 namespace SqlServer.Management.IntegrationServices
 {
+    /// <summary>
+    /// Provides an API for accessing the Integration Services catalogs across various servers.
+    /// </summary>
     public interface ISsisApplication
     {        
-        ISsisCatalog GetCatalog(SqlConnectionStringBuilder connectionStringBuilder);
-    }
-
-    public interface ISsisApplicationAdvanced : ISsisApplication
-    {
-        SsisConfiguration Configuration { get; }
+        ISsisCatalog GetCatalog(string connectionStringOrName);
     }
 }

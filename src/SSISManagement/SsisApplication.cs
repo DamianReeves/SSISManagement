@@ -7,28 +7,19 @@ namespace SqlServer.Management.IntegrationServices
     /// <summary>
     /// The SsisApplication is the entry point into the Integration Services Management API.
     /// </summary>
-    public class SsisApplication : ISsisApplicationAdvanced
+    internal class SsisApplication : ISsisApplication
     {
-        private readonly SsisConfiguration _configuration;
+        private readonly ISsisCatalogFactory _catalogFactory;
 
-        public SsisApplication():this(new SsisConfiguration())
-        {            
+        public SsisApplication(ISsisCatalogFactory catalogFactory)
+        {
+            if (catalogFactory == null) throw new ArgumentNullException("catalogFactory");
+            _catalogFactory = catalogFactory;
         }
 
-        public SsisApplication(SsisConfiguration configuration)
+        public ISsisCatalog GetCatalog(string connectionStringOrName)
         {
-            if (configuration == null) throw new ArgumentNullException("configuration");
-            _configuration = configuration;
-        }
-
-        public SsisConfiguration Configuration
-        {
-            get { return _configuration; }
-        }        
-
-        public ISsisCatalog GetCatalog(SqlConnectionStringBuilder connectionStringBuilder)
-        {
-            return new SsisCatalog(connectionStringBuilder);
+            return _catalogFactory.Create(connectionStringOrName);
         }
     }
 }

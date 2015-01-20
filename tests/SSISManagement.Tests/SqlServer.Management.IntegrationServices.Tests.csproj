@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationBuilderTests.cs" />
     <Compile Include="Core\Services\ServiceCollectionTests.cs" />
     <Compile Include="Data\InsightDatabaseTests.cs" />
     <Compile Include="Data\SsisDatabaseTests.cs" />

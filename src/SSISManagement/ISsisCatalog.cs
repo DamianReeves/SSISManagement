@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Data.SqlClient;
 using SqlServer.Management.IntegrationServices.Data;
 using SqlServer.Management.IntegrationServices.Data.Catalog.Parameters;
 

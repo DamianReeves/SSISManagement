@@ -70,12 +70,14 @@
     <Compile Include="ISsisApplication.cs" />
     <Compile Include="ISsisCatalog.cs" />
     <Compile Include="IDeployedProject.cs" />
+    <Compile Include="ISsisCatalogFactory.cs" />
     <Compile Include="LightInject\LightInject.cs" />
     <Compile Include="ModuleInitializer.cs" />
     <Compile Include="PackageExecutionException.cs" />
     <Compile Include="ProjectFacade.cs" />
     <Compile Include="ProjectFacadeBase.cs" />
     <Compile Include="SsisApplication.cs" />
+    <Compile Include="ApplicationBuilder.cs" />
     <Compile Include="SsisApplicationExtensions.cs" />
     <Compile Include="SsisCatalog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
