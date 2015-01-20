@@ -7,6 +7,8 @@ namespace SqlServer.Management.IntegrationServices.Data
 {
     public interface ICatalogDataService
     {
+        int? CommandTimeout { get; set; }
+
         IList<CatalogProperty> GetCatalogProperties();
         void Startup();
 
@@ -53,6 +55,8 @@ namespace SqlServer.Management.IntegrationServices.Data
             get { return _folderRepository.Value; }
         }
 
+        public int? CommandTimeout { get;set;}
+
         public IList<CatalogProperty> GetCatalogProperties()
         {
             return CatalogRepository.GetCatalogProperties();
@@ -65,12 +69,12 @@ namespace SqlServer.Management.IntegrationServices.Data
 
         public long CreateFolder(string folderName, int? commandTimeout = null)
         {
-            return FolderRepository.CreateFolder(folderName, commandTimeout);
+            return FolderRepository.CreateFolder(folderName, commandTimeout??CommandTimeout);
         }
 
         public void DeleteFolder(string folderName, int? commandTimeout = null)
         {
-            FolderRepository.DeleteFolder(folderName);
+            FolderRepository.DeleteFolder(folderName, commandTimeout??CommandTimeout);
         }
     }
 }

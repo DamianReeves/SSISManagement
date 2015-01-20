@@ -41,28 +41,32 @@ namespace SqlServer.Management.IntegrationServices
             get { return _catalogDataServiceFactory; }
         }
 
+        
+
+        public IDeployedProject GetProject(string folderName, string projectName)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Creates a folder in the Integration Services catalog.
         /// </summary>
         /// <param name="folderName">The name of the new folder.</param>
+        /// <param name="commandTimeout">The command timeout.</param>
         /// <returns>The folder identifier is returned.</returns>
-        public long CreateFolder(string folderName)
+        public long CreateFolder(string folderName, int? commandTimeout = null)
         {
-            return DataService.CreateFolder(folderName);
+            return DataService.CreateFolder(folderName, commandTimeout);
         }
 
         /// <summary>
         /// Deletes a folder from the Integration Services catalog.
         /// </summary>
         /// <param name="folderName">The name of the folder that is to be deleted.</param>
-        public void DeleteFolder(string folderName)
+        /// <param name="commandTimeout">The command timeout.</param>
+        public void DeleteFolder(string folderName, int? commandTimeout = null)
         {
-            DataService.DeleteFolder(folderName);
-        }               
-
-        public IDeployedProject GetProject(string folderName, string projectName)
-        {
-            throw new NotImplementedException();
-        }    
+            DataService.DeleteFolder(folderName, commandTimeout);
+        }
     }
 }

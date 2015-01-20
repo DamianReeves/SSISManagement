@@ -20,14 +20,15 @@ namespace SqlServer.Management.IntegrationServices
         /// Creates a folder in the Integration Services catalog.
         /// </summary>
         /// <param name="folderName">The name of the new folder.</param>
+        /// <param name="commandTimeout">The command timeout.</param>
         /// <returns>The folder identifier is returned.</returns>
-        long CreateFolder(string folderName);
+        long CreateFolder(string folderName, int? commandTimeout = null);
 
         /// <summary>
         /// Deletes a folder from the Integration Services catalog.
         /// </summary>
         /// <param name="folderName">The name of the folder that is to be deleted.</param>
-        void DeleteFolder(string folderName);
-
+        /// <param name="commandTimeout">The command timeout.</param>
+        void DeleteFolder(string folderName, int? commandTimeout = null);
     }
 }
