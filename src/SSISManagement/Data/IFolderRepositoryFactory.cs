@@ -9,31 +9,16 @@ namespace SqlServer.Management.IntegrationServices.Data
     {
     }
 
-    internal class FolderRepositoryFactory : IFolderRepositoryFactory
+    internal class FolderRepositoryFactory : RepositoryFactoryBase<IFolderRepository>, IFolderRepositoryFactory
     {
-        private readonly ISqlConnectionStringBuilderFactory _sqlConnectionStringBuilderFactory;
-
-        public FolderRepositoryFactory(ISqlConnectionStringBuilderFactory sqlConnectionStringBuilderFactory)
+        public FolderRepositoryFactory(IConnectionStringResolver connectionStringResolver)
+            :base(connectionStringResolver)
         {
-            if (sqlConnectionStringBuilderFactory == null)
-                throw new ArgumentNullException("sqlConnectionStringBuilderFactory");
-            _sqlConnectionStringBuilderFactory = sqlConnectionStringBuilderFactory;
         }
 
-        public ISqlConnectionStringBuilderFactory ConnectionStringBuilderFactory
+        protected override IFolderRepository CreateRepositoryFromConnectionString(string connectionString)
         {
-            get { return _sqlConnectionStringBuilderFactory; }
-        }
-
-        public IFolderRepository Create(string connectionStringOrName)
-        {
-            var builder = ConnectionStringBuilderFactory.Create(connectionStringOrName);
-            return Create(builder);
-        }
-
-        public IFolderRepository Create(SqlConnectionStringBuilder connectionStringBuilder)
-        {
-            return connectionStringBuilder.AsParallel<FolderRepository>();
+            return CreateRepository<FolderRepository>(connectionString);
         }
     }
 }

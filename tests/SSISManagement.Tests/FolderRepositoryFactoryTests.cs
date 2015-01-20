@@ -15,16 +15,16 @@ namespace SqlServer.Management.IntegrationServices
         public class ByHand
         {
             [Fact]
-            public void CreatingRequiresNonNullSqlConnectionStringBuilder()
+            public void CreatingRequiresNonNullConnectionStringResolver()
             {
                 Action ctor = () =>
                 {
-                    ISqlConnectionStringBuilderFactory sqlConnectionStringBuilderFactory = null;
-                    var sut = new FolderRepositoryFactory(sqlConnectionStringBuilderFactory);
+                    IConnectionStringResolver connectionStringResolver = null;
+                    var sut = new FolderRepositoryFactory(connectionStringResolver);
                 };
 
                 ctor.ShouldThrow<ArgumentNullException>()
-                    .Where(x => x.ParamName == "sqlConnectionStringBuilderFactory");
+                    .Where(x => x.ParamName == "connectionStringResolver");
             }
         }
         public class UsingContainer : TestFixtureBase
@@ -58,23 +58,6 @@ namespace SqlServer.Management.IntegrationServices
                 actual.Should().BeAssignableTo<IFolderRepository>();
             }
 
-            [Fact]
-            public void CanCallCreateFromSqlConnectionStringBuilder()
-            {
-                var builder = new SqlConnectionStringBuilder(SsisdbConnectionString);
-                var sut = Create<FolderRepositoryFactory>();
-                var actual = sut.Create(builder);
-                actual.Should().NotBeNull();
-            }
-
-            [Fact]
-            public void CreateUsingSqlConnectionStringBuilderShouldReturnAnIFolderRepository()
-            {
-                var builder = new SqlConnectionStringBuilder(SsisdbConnectionString);
-                var sut = Create<FolderRepositoryFactory>();
-                var actual = sut.Create(builder);
-                actual.Should().BeAssignableTo<IFolderRepository>();
-            }
 
             public static IEnumerable<object[]> CanCallCreateData
             {
@@ -83,6 +66,25 @@ namespace SqlServer.Management.IntegrationServices
                     yield return new object[]{"name=SSISDB"};
                     yield return new object[] { TestHelper.GetConnectionString() };
                 }
+            }
+        }
+    }
+
+    public class CatalogRepositoryTests
+    {
+        public class ByHand
+        {
+            [Fact]
+            public void CreatingRequiresNonNullConnectionStringResolver()
+            {
+                Action ctor = () =>
+                {
+                    IConnectionStringResolver connectionStringResolver = null;
+                    var sut = new CatalogRepositoryFactory(connectionStringResolver);
+                };
+
+                ctor.ShouldThrow<ArgumentNullException>()
+                    .Where(x => x.ParamName == "connectionStringResolver");
             }
         }
     }

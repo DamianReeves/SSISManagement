@@ -20,17 +20,25 @@ namespace SqlServer.Management.IntegrationServices
     /// </remarks>
     internal class SsisCatalog : ISsisCatalog
     {
+        private readonly ICatalogDataServiceFactory _catalogDataServiceFactory;
         private readonly ICatalogDataService _dataService;
 
-        public SsisCatalog(ICatalogDataService dataService)
-        {
-            if (dataService == null) throw new ArgumentNullException("dataService");
-            _dataService = dataService;
+        public SsisCatalog(string connectionStringOrName, ICatalogDataServiceFactory catalogDataServiceFactory)
+        {            
+            if (connectionStringOrName == null) throw new ArgumentNullException("connectionStringOrName");
+            if (catalogDataServiceFactory == null) throw new ArgumentNullException("catalogDataServiceFactory");
+            _catalogDataServiceFactory = catalogDataServiceFactory;
+            _dataService = _catalogDataServiceFactory.Create(connectionStringOrName);
         }
 
         public ICatalogDataService DataService
         {
             get { return _dataService; }
+        }
+
+        internal ICatalogDataServiceFactory DataServiceFactory
+        {
+            get { return _catalogDataServiceFactory; }
         }
 
         /// <summary>

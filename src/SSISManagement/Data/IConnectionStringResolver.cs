@@ -7,33 +7,26 @@ using System.Text.RegularExpressions;
 
 namespace SqlServer.Management.IntegrationServices.Data
 {
-    public interface ISqlConnectionStringBuilderFactory
+    public interface IConnectionStringResolver
     {
         /// <summary>
-        /// Creates a <see cref="SqlConnectionStringBuilder"/> from a connection string or connection name.
+        /// Gets a connection string given a connection string or connection name.
         /// A connection name can be specified in the format of name=ConnectionName.
         /// </summary>
         /// <param name="connectionStringOrName">The connection string or connection name</param>
-        /// <returns>A <see cref="SqlConnectionStringBuilder"/>.</returns>
-        SqlConnectionStringBuilder Create(string connectionStringOrName);
-
+        /// <returns>A connection string.</returns>
+        string GetConnectionStringResolved(string connectionStringOrName);
+        
         /// <summary>
-        /// Creates a <see cref="SqlConnectionStringBuilder"/> from a connection string.
-        /// </summary>
-        /// <param name="connectionString">The connection string.</param>
-        /// <returns>A <see cref="SqlConnectionStringBuilder"/>.</returns>
-        SqlConnectionStringBuilder CreateFromConnectionString(string connectionString);
-
-        /// <summary>
-        /// Creates a connection string builder from a connection string name. This name is usually the name of a connection string in
+        /// Creates a connection string from a connection string name. This name is usually the name of a connection string in
         /// in the app.config or web.config but can come from another source if implemented differently.
         /// </summary>
         /// <param name="connectionStringName"></param>
-        /// <returns>A <see cref="SqlConnectionStringBuilder"/>.</returns>
-        SqlConnectionStringBuilder CreateFromConnectionName(string connectionStringName);
+        /// <returns>A connection string</returns>
+        string CreateFromConnectionName(string connectionStringName);
     }
 
-    public abstract class SqlConnectionStringBuilderFactoryBase : ISqlConnectionStringBuilderFactory
+    public abstract class ConnectionStringResolverBase : IConnectionStringResolver
     {
         /// <summary>
         /// A regular expression used to detect connection string names.
@@ -41,14 +34,8 @@ namespace SqlServer.Management.IntegrationServices.Data
         public static readonly Regex ConnectionStringNameSpecificationRegex
             = new Regex(@"^\s*(?<key>name)\s*=\s*(?<value>.*)", RegexOptions.Compiled);
 
-        /// <summary>
-        /// Creates a <see cref="SqlConnectionStringBuilder"/> from a connection string or connection name.
-        /// A connection name can be specified in the format of name=ConnectionName.
-        /// </summary>
-        /// <param name="connectionStringOrName">The connection string or connection name</param>
-        /// <returns>A <see cref="SqlConnectionStringBuilder"/>.</returns>
-        /// <exception cref="KeyNotFoundException">Invalid key name within the connection string.</exception>
-        public SqlConnectionStringBuilder Create(string connectionStringOrName)
+        
+        public string GetConnectionStringResolved(string connectionStringOrName)
         {
             string connectionName;
             // If the following check returns true it is a connection name and we can use that to call the implementation
@@ -58,30 +45,20 @@ namespace SqlServer.Management.IntegrationServices.Data
             }
 
             // We have a connection string
-            return CreateFromConnectionString(connectionStringOrName);
+            return connectionStringOrName;
         }
 
-        /// <summary>
-        /// Creates a <see cref="SqlConnectionStringBuilder"/> from a connection string.
-        /// </summary>
-        /// <param name="connectionString"></param>
-        /// <returns>A <see cref="SqlConnectionStringBuilder"/>.</returns>
-        /// <exception cref="KeyNotFoundException">Invalid key name within the connection string.</exception>
-        public virtual SqlConnectionStringBuilder CreateFromConnectionString(string connectionString)
-        {
-            return new SqlConnectionStringBuilder(connectionString);
-        }
 
         /// <summary>
-        /// Creates a connection string builder from a connection name.
+        /// Creates a connection string from a connection string name. This name is usually the name of a connection string in
+        /// in the app.config or web.config but can come from another source if implemented differently.
         /// </summary>
         /// <param name="connectionStringName"></param>
-        /// <returns>A <see cref="SqlConnectionStringBuilder"/>.</returns>
-        /// <exception cref="KeyNotFoundException">Invalid key name within the connection string.</exception>
-        public SqlConnectionStringBuilder CreateFromConnectionName(string connectionStringName)
+        /// <returns>A connection string</returns>
+        public string CreateFromConnectionName(string connectionStringName)
         {
-            var connectionString = GetConnectionStringForConnectionName(connectionStringName);
-            return CreateFromConnectionString(connectionString);
+            var connectionString = GetConnectionStringForConnectionName(connectionStringName);            
+            return connectionString;
         }
 
         /// <summary>
@@ -110,7 +87,7 @@ namespace SqlServer.Management.IntegrationServices.Data
         protected abstract string GetConnectionStringForConnectionName(string connectionStringName);
     }
 
-    internal class SqlConnectionStringBuilderFactory : SqlConnectionStringBuilderFactoryBase
+    internal class ConnectionStringResolver : ConnectionStringResolverBase
     {
         /// <summary>
         /// Get a connection string for the supplied connection name.

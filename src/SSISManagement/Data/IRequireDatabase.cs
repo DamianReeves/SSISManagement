@@ -2,11 +2,11 @@
 
 namespace SqlServer.Management.IntegrationServices.Data
 {
-    public interface IRequireDatabase : IDbAccessor
+    public interface IRequireDatabase : IRepository
     {
     }
 
-    public interface IDbAccessor
+    public interface IRepository
     {
         IDbConnection GetConnection();
     }

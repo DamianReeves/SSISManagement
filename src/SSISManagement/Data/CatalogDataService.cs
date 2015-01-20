@@ -27,21 +27,20 @@ namespace SqlServer.Management.IntegrationServices.Data
     }
     public class CatalogDataService : ICatalogDataService
     {
-        private readonly SqlConnectionStringBuilder _connectionStringBuilder;
         private readonly Lazy<IFolderRepository> _folderRepository;
         private readonly Lazy<ICatalogRepository> _catalogRepository;
 
         public CatalogDataService(
-            SqlConnectionStringBuilder connectionStringBuilder, 
+            string connectionStringOrName, 
             ICatalogRepositoryFactory catalogRepositoryFactory, 
             IFolderRepositoryFactory folderRepositoryFactory)
         {
-            if (connectionStringBuilder == null) throw new ArgumentNullException("connectionStringBuilder");
+            if (connectionStringOrName == null) throw new ArgumentNullException("connectionStringOrName");
+            if(string.IsNullOrWhiteSpace(connectionStringOrName)) throw new ArgumentException("The parameter is required.", "connectionStringOrName");
             if (catalogRepositoryFactory == null) throw new ArgumentNullException("catalogRepositoryFactory");
             if (folderRepositoryFactory == null) throw new ArgumentNullException("folderRepositoryFactory");
-            _connectionStringBuilder = connectionStringBuilder;
-            _catalogRepository = new Lazy<ICatalogRepository>(()=> catalogRepositoryFactory.Create(_connectionStringBuilder));
-            _folderRepository = new Lazy<IFolderRepository>(()=> folderRepositoryFactory.Create(_connectionStringBuilder));
+            _catalogRepository = new Lazy<ICatalogRepository>(()=> catalogRepositoryFactory.Create(connectionStringOrName));
+            _folderRepository = new Lazy<IFolderRepository>(() => folderRepositoryFactory.Create(connectionStringOrName));
         }
 
         public ICatalogRepository CatalogRepository

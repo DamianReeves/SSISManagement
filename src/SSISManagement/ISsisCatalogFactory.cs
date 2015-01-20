@@ -9,9 +9,9 @@ namespace SqlServer.Management.IntegrationServices
 
     internal class SsisCatalogFactory : ISsisCatalogFactory
     {
-        private readonly Func<ISsisCatalog> _factory;
+        private readonly Func<string,ISsisCatalog> _factory;
 
-        public SsisCatalogFactory(Func<ISsisCatalog> factory)
+        public SsisCatalogFactory(Func<string, ISsisCatalog> factory)
         {
             if (factory == null) throw new ArgumentNullException("factory");
             _factory = factory;
@@ -19,7 +19,7 @@ namespace SqlServer.Management.IntegrationServices
 
         public ISsisCatalog Create(string connectionStringOrName)
         {
-            return _factory();
+            return _factory(connectionStringOrName);
         }
     }
 }
