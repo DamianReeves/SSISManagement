@@ -8,17 +8,12 @@ namespace SqlServer.Management.IntegrationServices
     {
         public void Compose(IServiceRegistry serviceRegistry)
         {
-            serviceRegistry.Register<IConnectionStringResolver,ConnectionStringResolver>();
-            serviceRegistry.Register<ISsisApplication, SsisApplication>();
+            serviceRegistry.Register<IConnectionStringResolver,ConnectionStringResolver>(new PerContainerLifetime());
+            serviceRegistry.Register<ISsisApplication, SsisApplication>(new PerRequestLifeTime());
 
-            serviceRegistry.Register<ICatalogDataServiceFactory, CatalogDataServiceFactory>(new PerContainerLifetime());
-            
-            serviceRegistry.Register<string, ISsisCatalog>(
-                (factory,value)=> new SsisCatalog(value,factory.GetInstance<ICatalogDataServiceFactory>()));
+            serviceRegistry.Register<ICatalogDataServiceFactory, CatalogDataServiceFactory>(new PerContainerLifetime());           
 
-            serviceRegistry.Register<ISsisCatalogFactory, SsisCatalogFactory>(new PerContainerLifetime());
-            
-            serviceRegistry.Register<ISsisCatalogFactory, SsisCatalogFactory>();
+            serviceRegistry.Register<ISsisCatalogFactory, SsisCatalogFactory>(new PerContainerLifetime());            
 
             serviceRegistry.Register<ICatalogDataService, CatalogDataService>();
 

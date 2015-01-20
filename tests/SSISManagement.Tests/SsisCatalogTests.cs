@@ -4,28 +4,26 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using FluentAssertions;
+using SqlServer.Management.IntegrationServices.Testing;
 using Xbehave;
+using Xunit;
 
 namespace SqlServer.Management.IntegrationServices
 {
     public class SsisCatalogTests
     {
-        //public class UsingSqlConnectionBuilderConstructor : TestRequiringConnectionStrings
-        //{
-        //    [Fact]
-        //    public void SqlConnectionBuilderMustNotBeNull()
-        //    {
-        //        Action ctor = () =>
-        //        {
-        //            SqlConnectionStringBuilder connectionStringBuilder = null;
-        //            var catalog = new SsisCatalog(connectionStringBuilder);
-        //        };
+        public class UsingContainer:TestFixtureBase
+        {
+            [Fact]
+            public void CanCreateForConnectionString()
+            {
+                Action invoker = () => {
+                    var catalog = Create<ISsisCatalogFactory>().Create(SsisdbConnectionString);
+                };
 
-        //        ctor.ShouldThrow<ArgumentNullException>()
-        //            .Where(ex => ex.ParamName == "connectionStringBuilder");
-        //    }
-
-
-        //}
+                invoker.ShouldNotThrow();
+            }
+        }
     }
 }
