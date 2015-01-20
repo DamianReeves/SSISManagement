@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "SampleSSIS2012Project", "SampleSSISProject\SampleSSIS2012Project.dtproj", "{F82FC36A-DE5B-4265-95D3-9B20A957C594}"
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "ExampleSSISProject", "SampleSSISProject\ExampleSSISProject.dtproj", "{F82FC36A-DE5B-4265-95D3-9B20A957C594}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

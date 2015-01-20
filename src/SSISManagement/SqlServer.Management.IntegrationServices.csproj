@@ -42,8 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ExceptionHelper.cs" />
-    <Compile Include="Core\ISsisApplicationServices.cs" />
     <Compile Include="Core\ResourceHelper.cs" />
+    <Compile Include="Core\Services\DbAccessorFactory.cs" />
+    <Compile Include="Core\Services\DbAccessorFactoryBase.cs" />
+    <Compile Include="Core\Services\IDbAccessorFactory.cs" />
+    <Compile Include="Core\Services\IServiceCollection.cs" />
     <Compile Include="Data\Catalog\CatalogParameterTypes.cs" />
     <Compile Include="Data\Catalog\Parameters\SetExecutionParameterValueParameters.cs" />
     <Compile Include="Data\Catalog\Parameters\SsisParameterMapper.cs" />
@@ -52,7 +55,6 @@
     <Compile Include="Data\ConnectionStrings.cs" />
     <Compile Include="Data\FastExpandoExtensions.cs" />
     <Compile Include="Data\ICatalogRepository.cs" />
-    <Compile Include="Data\IDbAccessorfactory.cs" />
     <Compile Include="Data\IRequireDatabase.cs" />
     <Compile Include="Data\IExecutionRepository.cs" />
     <Compile Include="Data\IFolderRepository.cs" />
@@ -87,6 +89,7 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

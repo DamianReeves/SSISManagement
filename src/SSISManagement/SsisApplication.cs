@@ -7,7 +7,7 @@ namespace SqlServer.Management.IntegrationServices
     /// <summary>
     /// The SsisApplication is the entry point into the Integration Services Management API.
     /// </summary>
-    public class SsisApplication : ISsisApplication
+    public class SsisApplication : ISsisApplicationAdvanced
     {
         private readonly SsisConfiguration _configuration;
 

@@ -4,15 +4,16 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
 using Insight.Database;
+using SqlServer.Management.IntegrationServices.Core.Services;
 using SqlServer.Management.IntegrationServices.Data;
 using SqlServer.Management.IntegrationServices.Data.Catalog.Parameters;
 
 namespace SqlServer.Management.IntegrationServices
-{
+{    
     public class SsisConfiguration
     {
         private static bool _hasInsightBeenInitialized;
-
+        private IServiceCollection _services;
         static SsisConfiguration()
         {
             EnsureInsightIsInitialized();
@@ -24,6 +25,21 @@ namespace SqlServer.Management.IntegrationServices
             return new SqlConnection(connectionString);
         };
 
+        public SsisConfiguration():this(new ServiceCollection())
+        {
+            
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="services"></param>
+        /// <exception cref="ArgumentNullException">The value of 'services' cannot be null. </exception>
+        public SsisConfiguration(IServiceCollection services)
+        {
+            if (services == null) throw new ArgumentNullException("services");
+            _services = services;
+        }
+
         /// <summary>
         /// Gets a delegate that can be used to provide an <see cref="IDbConnection"/>.
         /// The delegate accepts a <see cref="string"/> as input. 
@@ -33,6 +49,11 @@ namespace SqlServer.Management.IntegrationServices
         public Func<string, IDbConnection> ConnectionProvider
         {
             get { return _connectionProvider; }
+        }
+
+        public IServiceCollection Services
+        {
+            get { return _services; }
         }
 
         internal static void EnsureInsightIsInitialized()

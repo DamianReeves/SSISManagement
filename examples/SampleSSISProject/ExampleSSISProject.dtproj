@@ -15,7 +15,7 @@
       <SSIS:Project SSIS:ProtectionLevel="EncryptSensitiveWithUserKey" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
         <SSIS:Properties>
           <SSIS:Property SSIS:Name="ID">{671fdb62-bf2c-4687-98e3-9ce47295aae9}</SSIS:Property>
-          <SSIS:Property SSIS:Name="Name">SampleSSIS2012Project</SSIS:Property>
+          <SSIS:Property SSIS:Name="Name">ExampleSSISProject</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionBuild">0</SSIS:Property>
@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">NEO</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAoFnbtix5J0m0xkttO6EBgQAAAAACAAAAAAAQZgAAAAEAACAAAAArLlFYMmQFjc6UVUQ4Q6IofzkOPLkRv8kcXtUOzkcMHAAAAAAOgAAAAAIAACAAAABzepw/jG33chf6atFRxCIKqsnza1f+ZTEzC9uz4ABpdZAAAAAGBgX8sJu5M+JFFri0OjwHJcjr1of9VzFJYPOxo7oTdhpWxfrp+yMIMVqLJEOJOt8pXq3jMlm3SYFNQJUApw+ty6ZYxuUuTHO8DjHQfQeWoxpou67popFK/j+V+4I7Hdzo4Dt4/13VRQxr7Wgbk3J70VA80+X9fMMi6Uw53tNKPHqppW27DtAOSloW5z1PDg5AAAAACWRRVJX4uxwefB4zIaG/2jJOtlZHDF/O4m1NOd1lefhrQikC/MoviKtmJp8AzO7pBXwP5KysRdquGWZ2czyPwQ==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAoFnbtix5J0m0xkttO6EBgQAAAAACAAAAAAAQZgAAAAEAACAAAAAzpgNBUh/CvDLl4+QzqWLTZemBxviZAjEu1V9ZFi+PWwAAAAAOgAAAAAIAACAAAADUPTJkVdl0jmhLy2zdrk6q+jfTzPc5CgIss/E3Tnf3oJAAAAAyL13m0Fk31JHncoRgkt7x7caD5zSu0E2gxE4YVSbx+tDzithHqYxVZ/qGqZd+sk2NAGDuSETTXokm1drcddyryhLW+RToOL5l1yURpVXljXlBs30//rqbJg5tBkF2r0DyqC9DbJXsD2khTplZZK3UYxwwROhRwoMAVeDBBOGpnTG/8JUcech5j6Cj+APeNnJAAAAAmIOlQ0apkKWzKMr3CcWB05XJxkb7+XiMNa0aHEQAVnLxTWuEAGBGGqYGU5lQb0AxLtWqlIM7uXkggdXeIZ02wQ==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
