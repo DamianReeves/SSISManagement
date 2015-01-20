@@ -13,6 +13,7 @@ namespace SqlServer.Management.IntegrationServices
     /// </remarks>
     public interface ISsisCatalog
     {
+        ICatalogDataService DataService { get; }
         IDeployedProject GetProject(string folderName, string projectName);
 
         /// <summary>
@@ -28,6 +29,5 @@ namespace SqlServer.Management.IntegrationServices
         /// <param name="folderName">The name of the folder that is to be deleted.</param>
         void DeleteFolder(string folderName);
 
-        ISsisDatabase Database { get; }
     }
 }

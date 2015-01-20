@@ -1,4 +1,6 @@
-﻿namespace SqlServer.Management.IntegrationServices
+﻿using System;
+
+namespace SqlServer.Management.IntegrationServices
 {
     public interface ISsisCatalogFactory
     {
@@ -7,9 +9,17 @@
 
     internal class SsisCatalogFactory : ISsisCatalogFactory
     {
+        private readonly Func<ISsisCatalog> _factory;
+
+        public SsisCatalogFactory(Func<ISsisCatalog> factory)
+        {
+            if (factory == null) throw new ArgumentNullException("factory");
+            _factory = factory;
+        }
+
         public ISsisCatalog Create(string connectionStringOrName)
         {
-            throw new System.NotImplementedException();
+            return _factory();
         }
     }
 }

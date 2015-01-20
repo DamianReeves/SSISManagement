@@ -1,8 +1,7 @@
 using System.Data.SqlClient;
 using Insight.Database;
-using SqlServer.Management.IntegrationServices.Data;
 
-namespace SqlServer.Management.IntegrationServices.Core.Services
+namespace SqlServer.Management.IntegrationServices.Data.Services
 {
     internal class DbAccessorFactory : DbAccessorFactoryBase
 

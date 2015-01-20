@@ -40,8 +40,7 @@ namespace SqlServer.Management.IntegrationServices
 
         private void ApplyDefaultConfiguration(IServiceRegistry serviceRegistry)
         {
-            serviceRegistry.Register<ISsisApplication, SsisApplication>();
-            serviceRegistry.Register<ISsisCatalogFactory, SsisCatalogFactory>(new PerContainerLifetime());
+            serviceRegistry.RegisterFrom<SsisCompositionRoot>();
         }
     }
 }

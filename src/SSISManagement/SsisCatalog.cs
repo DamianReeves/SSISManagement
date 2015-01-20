@@ -18,21 +18,19 @@ namespace SqlServer.Management.IntegrationServices
     /// <remarks>
     /// The <see cref="ISsisCatalog"/> interface provides an API for working with the Integration Services Catalog in SQL Server 2012 and above.
     /// </remarks>
-    public class SsisCatalog : ISsisCatalog
+    internal class SsisCatalog : ISsisCatalog
     {
-        private readonly SqlConnectionStringBuilder _connectionStringBuilder;
-        private readonly Lazy<SsisDatabase> _databaseAccessor;
+        private readonly ICatalogDataService _dataService;
 
-        public SsisCatalog(SqlConnectionStringBuilder connectionStringBuilder)
+        public SsisCatalog(ICatalogDataService dataService)
         {
-            if (connectionStringBuilder == null) throw new ArgumentNullException("connectionStringBuilder");
-            _connectionStringBuilder = connectionStringBuilder;
-            _databaseAccessor = new Lazy<SsisDatabase>(connectionStringBuilder.AsParallel<SsisDatabase>);
+            if (dataService == null) throw new ArgumentNullException("dataService");
+            _dataService = dataService;
         }
 
-        public SqlConnectionStringBuilder ConnectionStringBuilder
+        public ICatalogDataService DataService
         {
-            get { return _connectionStringBuilder; }
+            get { return _dataService; }
         }
 
         /// <summary>
@@ -42,7 +40,7 @@ namespace SqlServer.Management.IntegrationServices
         /// <returns>The folder identifier is returned.</returns>
         public long CreateFolder(string folderName)
         {
-            return Database.CreateFolder(folderName);
+            return DataService.CreateFolder(folderName);
         }
 
         /// <summary>
@@ -51,13 +49,8 @@ namespace SqlServer.Management.IntegrationServices
         /// <param name="folderName">The name of the folder that is to be deleted.</param>
         public void DeleteFolder(string folderName)
         {
-            Database.DeleteFolder(folderName);
-        }
-
-        public ISsisDatabase Database
-        {
-            get { return _databaseAccessor.Value; }
-        }        
+            DataService.DeleteFolder(folderName);
+        }               
 
         public IDeployedProject GetProject(string folderName, string projectName)
         {

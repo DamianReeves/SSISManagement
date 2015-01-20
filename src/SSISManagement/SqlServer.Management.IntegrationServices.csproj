@@ -43,10 +43,6 @@
   <ItemGroup>
     <Compile Include="Core\ExceptionHelper.cs" />
     <Compile Include="Core\ResourceHelper.cs" />
-    <Compile Include="Core\Services\DbAccessorFactory.cs" />
-    <Compile Include="Core\Services\DbAccessorFactoryBase.cs" />
-    <Compile Include="Core\Services\IDbAccessorFactory.cs" />
-    <Compile Include="Core\Services\IServiceCollection.cs" />
     <Compile Include="Data\CatalogDataService.cs" />
     <Compile Include="Data\Catalog\CatalogParameterTypes.cs" />
     <Compile Include="Data\Catalog\Parameters\SetExecutionParameterValueParameters.cs" />
@@ -56,11 +52,15 @@
     <Compile Include="Data\ConnectionStrings.cs" />
     <Compile Include="Data\FastExpandoExtensions.cs" />
     <Compile Include="Data\ICatalogRepository.cs" />
+    <Compile Include="Data\IFolderRepositoryFactory.cs" />
     <Compile Include="Data\IRequireDatabase.cs" />
     <Compile Include="Data\IExecutionRepository.cs" />
     <Compile Include="Data\IFolderRepository.cs" />
     <Compile Include="Data\ISqlConnectionStringBuilderFactory.cs" />
     <Compile Include="Data\ISsisDatabase.cs" />
+    <Compile Include="Data\Services\DbAccessorFactory.cs" />
+    <Compile Include="Data\Services\DbAccessorFactoryBase.cs" />
+    <Compile Include="Data\Services\IDbAccessorFactory.cs" />
     <Compile Include="Data\SsisDatabase.cs" />
     <Compile Include="Data\ProjectInfo.cs" />
     <Compile Include="Data\SsisDatabaseExtensions.cs" />
@@ -81,7 +81,7 @@
     <Compile Include="SsisApplicationExtensions.cs" />
     <Compile Include="SsisCatalog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SsisConfiguration.cs" />
+    <Compile Include="SsisCompositionRoot.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -92,6 +92,9 @@
     <Content Include="FodyWeavers.xml">
       <SubType>Designer</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

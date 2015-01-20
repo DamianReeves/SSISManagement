@@ -1,7 +1,6 @@
 using System.Data.SqlClient;
-using SqlServer.Management.IntegrationServices.Data;
 
-namespace SqlServer.Management.IntegrationServices.Core.Services
+namespace SqlServer.Management.IntegrationServices.Data.Services
 {
     public abstract class DbAccessorFactoryBase : IDbAccessorFactory
     {
