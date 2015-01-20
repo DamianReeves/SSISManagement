@@ -1,16 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using FluentAssertions;
 using SqlServer.Management.IntegrationServices.Data;
-using SqlServer.Management.IntegrationServices.LightInject;
 using SqlServer.Management.IntegrationServices.Testing;
 using Xunit;
 using Xunit.Extensions;
 
 namespace SqlServer.Management.IntegrationServices
 {
-    public class FolderRepositoryFactoryTests
+    public class CatalogRepositoryTests
     {
         public class ByHand
         {
@@ -20,13 +18,14 @@ namespace SqlServer.Management.IntegrationServices
                 Action ctor = () =>
                 {
                     IConnectionStringResolver connectionStringResolver = null;
-                    var sut = new FolderRepositoryFactory(connectionStringResolver);
+                    var sut = new CatalogRepositoryFactory(connectionStringResolver);
                 };
 
                 ctor.ShouldThrow<ArgumentNullException>()
                     .Where(x => x.ParamName == "connectionStringResolver");
             }
         }
+
         public class UsingContainer : TestFixtureBase
         {
             [Fact]
@@ -34,7 +33,7 @@ namespace SqlServer.Management.IntegrationServices
             {
                 Action invocation = () =>
                 {
-                    var sut = Create<FolderRepositoryFactory>();
+                    var sut = Create<CatalogRepositoryFactory>();
                 };
 
                 invocation.ShouldNotThrow();
@@ -44,7 +43,7 @@ namespace SqlServer.Management.IntegrationServices
             [PropertyData("CanCallCreateData")]
             public void CanCallCreateUsingConnectionStringOrName(string connectionStringOrName)
             {
-                var sut = Create<FolderRepositoryFactory>();
+                var sut = Create<CatalogRepositoryFactory>();
                 var repository = sut.Create(connectionStringOrName);
                 repository.Should().NotBeNull();
             }
@@ -53,9 +52,9 @@ namespace SqlServer.Management.IntegrationServices
             [PropertyData("CanCallCreateData")]
             public void CreateUsingConnectionStringOrNameReturnsAnIFolderRepository(string connectionStringOrName)
             {
-                var sut = Create<FolderRepositoryFactory>();
+                var sut = Create<CatalogRepositoryFactory>();
                 var actual = sut.Create(connectionStringOrName);
-                actual.Should().BeAssignableTo<IFolderRepository>();
+                actual.Should().BeAssignableTo<ICatalogRepository>();
             }
 
 
@@ -63,7 +62,7 @@ namespace SqlServer.Management.IntegrationServices
             {
                 get
                 {
-                    yield return new object[]{"name=SSISDB"};
+                    yield return new object[] { "name=SSISDB" };
                     yield return new object[] { TestHelper.GetConnectionString() };
                 }
             }

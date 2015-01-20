@@ -13,10 +13,5 @@ namespace SqlServer.Management.IntegrationServices.Data
         {            
         }
 
-        public ICatalogRepository Create(string connectionStringOrName)
-        {
-            throw new System.NotImplementedException();
-        }
-
     }
 }

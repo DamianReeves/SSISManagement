@@ -1,4 +1,5 @@
 ﻿using System;
+using SqlServer.Management.IntegrationServices.Data;
 
 namespace SqlServer.Management.IntegrationServices
 {
@@ -9,17 +10,22 @@ namespace SqlServer.Management.IntegrationServices
 
     internal class SsisCatalogFactory : ISsisCatalogFactory
     {
-        private readonly Func<string,ISsisCatalog> _factory;
+        private readonly ICatalogDataServiceFactory _catalogDataServiceFactory;
 
-        public SsisCatalogFactory(Func<string, ISsisCatalog> factory)
+        public SsisCatalogFactory(ICatalogDataServiceFactory catalogDataServiceFactory)
         {
-            if (factory == null) throw new ArgumentNullException("factory");
-            _factory = factory;
+            if (catalogDataServiceFactory == null) throw new ArgumentNullException("catalogDataServiceFactory");
+            _catalogDataServiceFactory = catalogDataServiceFactory;
+        }
+
+        public ICatalogDataServiceFactory DataServiceFactory
+        {
+            get { return _catalogDataServiceFactory; }
         }
 
         public ISsisCatalog Create(string connectionStringOrName)
         {
-            return _factory(connectionStringOrName);
+            return new SsisCatalog(connectionStringOrName, DataServiceFactory);
         }
     }
 }
