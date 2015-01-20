@@ -19,7 +19,7 @@ namespace SqlServer.Management.IntegrationServices
             public void CanCreateForConnectionString()
             {
                 Action invoker = () => {
-                    var catalog = Create<ISsisCatalogFactory>().Create(SsisdbConnectionString);
+                    var catalog = GetInstance<ISsisCatalogFactory>().Create(SsisdbConnectionString);
                 };
 
                 invoker.ShouldNotThrow();
