@@ -12,6 +12,10 @@ namespace SqlServer.Management.IntegrationServices
     {
         private readonly ICatalogDataServiceFactory _catalogDataServiceFactory;
 
+        /// <summary>
+        /// </summary>
+        /// <param name="catalogDataServiceFactory"></param>
+        /// <exception cref="ArgumentNullException">The value of 'catalogDataServiceFactory' cannot be null. </exception>
         public SsisCatalogFactory(ICatalogDataServiceFactory catalogDataServiceFactory)
         {
             if (catalogDataServiceFactory == null) throw new ArgumentNullException("catalogDataServiceFactory");
