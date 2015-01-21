@@ -47,12 +47,14 @@
     <Compile Include="Core\ExceptionHelper.cs" />
     <Compile Include="Core\ResourceHelper.cs" />
     <Compile Include="Data\CatalogDataService.cs" />
-    <Compile Include="Data\Catalog\CatalogParameterTypes.cs" />
+    <Compile Include="Data\Catalog\CatalogParameterType.cs" />
     <Compile Include="Data\Catalog\Parameters\SetExecutionParameterValueParameters.cs" />
     <Compile Include="Data\Catalog\Parameters\SsisParameterMapper.cs" />
     <Compile Include="Data\DataAccessExtensions.cs" />
     <Compile Include="Data\Dtos\CatalogProperty.cs" />
     <Compile Include="Data\ConnectionStrings.cs" />
+    <Compile Include="Data\ExecutionRepository.cs" />
+    <Compile Include="Data\ExecutionRepositoryImplementation.cs" />
     <Compile Include="Data\FastExpandoExtensions.cs" />
     <Compile Include="Data\ICatalogDataServiceFactory.cs" />
     <Compile Include="Data\ICatalogRepository.cs" />
@@ -97,7 +99,6 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

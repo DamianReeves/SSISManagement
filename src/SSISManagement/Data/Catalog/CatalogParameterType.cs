@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SqlServer.Management.IntegrationServices.Data.Catalog
 {
-    public enum CatalogParameterTypes :short
+    public enum CatalogParameterType :short
     {
         ProjectParameter = 20,
         PackageParameter = 30,

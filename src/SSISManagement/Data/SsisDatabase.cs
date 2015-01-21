@@ -6,8 +6,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using Insight.Database;
 using SqlServer.Management.IntegrationServices.Core;
+using SqlServer.Management.IntegrationServices.Data.Catalog;
 using SqlServer.Management.IntegrationServices.Data.Catalog.Parameters;
 using SqlServer.Management.IntegrationServices.Data.Dtos;
 
@@ -16,30 +18,79 @@ namespace SqlServer.Management.IntegrationServices.Data
     public abstract class SsisDatabase : ISsisDatabase
     {        
         private static readonly Type ThisType = typeof (SsisDatabase);
+        private ExecutionRepositoryImplementation _executionRepositoryImplementation;
+        
+
+        internal ExecutionRepositoryImplementation ExecutionRepositoryImplementation
+        {
+            get
+            {
+                Interlocked.CompareExchange(ref _executionRepositoryImplementation
+                    , new ExecutionRepositoryImplementation(GetConnection)
+                    , null);
+                return _executionRepositoryImplementation;
+            }
+        }
+
         public abstract IDbConnection GetConnection();
 
         [Sql("startup", Schema = "catalog")]
         public abstract void Startup();
 
-        public long CreateExecution(string folderName, string projectName,
-            string packageName, long? referenceId = null, bool use32BitRuntime = false, int? commandTimeout=null)
+        public virtual long CreateExecution(string folderName, string projectName, string packageName,
+            long? referenceId = null,
+            bool use32BitRuntime = false, int? commandTimeout = null)
         {
-            return this.WithConnection(conn =>
-            {
-                dynamic parameters = new FastExpando();
-                parameters.folder_name = folderName;
-                parameters.project_name = projectName;
-                parameters.package_name = packageName;
-                parameters.reference_id = referenceId;
-                parameters.use32bitruntime = use32BitRuntime;
-                parameters.execution_id = default(long?);
-                conn.Execute("catalog.create_execution", (FastExpando)parameters, commandTimeout: commandTimeout);
-                return parameters.execution_id;
-            });
+            return ExecutionRepositoryImplementation.CreateExecution(folderName, projectName, packageName, referenceId,
+                use32BitRuntime, commandTimeout);
         }
 
-        [Sql("start_execution", Schema = "catalog")]
-        public abstract int StartExecution(long executionId, int? commandTimeout = null);
+        /// <summary>
+        /// Starts an instance of execution in the Integration Services catalog.
+        /// </summary>
+        /// <remarks>
+        /// An execution is used to specify the parameter values that will be used by a package during a single instance of package execution. After an instance of execution has been created, before it has been started, the corresponding project might be redeployed. In this case, the instance of execution will reference a project that is outdated. This will cause the stored procedure to fail.
+        /// </remarks>
+        /// <param name="executionId">The unique identifier for the instance of execution. </param>
+        /// <param name="commandTimeout"></param>
+        /// <returns><b>0</b> if successful.</returns>
+        /// <exception cref="Exception">A delegate callback throws an exception. </exception>
+        public virtual int StartExecution(long executionId, int? commandTimeout = null)
+        {
+            return ExecutionRepositoryImplementation.StartExecution(executionId, commandTimeout);
+        }
+
+        /// <summary>
+        /// Sets the value of a parameter for an instance of execution in the Integration Services catalog.
+        /// A parameter value cannot be changed after an instance of execution has started.
+        /// </summary>
+        /// <remarks>
+        /// To find out the parameter values that were used for a given execution, query the catalog.execution_parameter_values view.
+        /// To specify the scope of information that is logged during a package execution, set parameter_name to LOGGING_LEVEL and set parameter_value to one of the following values.
+        /// Set the object_type parameter to 50.
+        /// </remarks>
+        /// <param name="executionId"></param>
+        /// <param name="parameterType"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="parameterValue"></param>
+        /// <param name="commandTimeout"></param>
+        /// <returns></returns>
+        public int SetExecutionParameterValue(long executionId, CatalogParameterType parameterType, string parameterName,
+            object parameterValue, int? commandTimeout = null)
+        {
+            return ExecutionRepositoryImplementation.SetExecutionParameterValue(executionId, parameterType, parameterName,
+                parameterValue, commandTimeout);
+        }
+
+        public virtual long ExecutePackage(string folderName, string projectName, string packageName,
+            long? referenceId = null,
+            bool use32BitRuntime = false,
+            bool synchrounous = false,
+            int? commandTimeout = null)
+        {
+            return ExecutionRepositoryImplementation.ExecutePackage(folderName, projectName, packageName, referenceId, use32BitRuntime,
+                synchrounous, commandTimeout);
+        }
 
         /// <summary>
         /// Creates a folder in the Integration Services catalog.
@@ -74,22 +125,7 @@ namespace SqlServer.Management.IntegrationServices.Data
                     , new { folder_name = folderName }
                     , commandTimeout: commandTimeout);
             });
-        }
-
-        public long ExecutePackage(string folderName, string projectName, string packageName, long? referenceId = null, bool use32BitRuntime = false, int? commandTimeout = null)
-        {
-            try
-            {
-                var executionId = CreateExecution(folderName, projectName, packageName
-                    , referenceId, use32BitRuntime, commandTimeout);
-                
-                return executionId;
-            }
-            catch (SqlException ex)
-            {
-                throw ex.WrapSqlException();
-            }
-        }
+        }        
 
         public virtual IList<CatalogProperty> GetCatalogProperties()
         {

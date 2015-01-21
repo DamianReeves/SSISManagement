@@ -5,11 +5,11 @@ namespace SqlServer.Management.IntegrationServices.Data.Catalog.Parameters
     public class SetExecutionParameterValueParameters
     {
         private readonly long _executionId;
-        private readonly CatalogParameterTypes _objectType;
+        private readonly CatalogParameterType _objectType;
         private readonly string _parameterName;
         private readonly object _parameterValue;
 
-        public SetExecutionParameterValueParameters(long executionId, CatalogParameterTypes objectType, string parameterName, object parameterValue)
+        public SetExecutionParameterValueParameters(long executionId, CatalogParameterType objectType, string parameterName, object parameterValue)
         {
             _executionId = executionId;
             _objectType = objectType;
@@ -22,7 +22,7 @@ namespace SqlServer.Management.IntegrationServices.Data.Catalog.Parameters
             get { return _executionId; }
         }
 
-        public CatalogParameterTypes ObjectType
+        public CatalogParameterType ObjectType
         {
             get { return _objectType; }
         }
