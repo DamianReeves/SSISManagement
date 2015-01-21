@@ -94,7 +94,7 @@ namespace SqlServer.Management.IntegrationServices.Data
                     theCall =
                         Database.Invoking(
                             db =>
-                                db.ExecutePackage("SSISManagement-Examples", "SampleSSIS2012Project","IDONTEXIST")
+                                db.ExecutePackage("SSISManagement-Examples", "ExampleSSISProject","IDONTEXIST")
                             );
                 });
 
@@ -111,7 +111,7 @@ namespace SqlServer.Management.IntegrationServices.Data
                 ._(() =>
                 {
                     executionId =
-                        Database.ExecutePackage("SSISManagement-Examples", "SampleSSIS2012Project",
+                        Database.ExecutePackage("SSISManagement-Examples", "ExampleSSISProject",
                             "EmptyParameterlessPackage.dtsx");
                 });
 
