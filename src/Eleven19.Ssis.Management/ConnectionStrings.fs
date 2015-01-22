@@ -1,6 +1,5 @@
 ﻿namespace Eleven19.Ssis.Management.Data
     
-    type ConnectionString = ConnectionString of string
 
     [<AutoOpen>]
     module ConnectionStrings =

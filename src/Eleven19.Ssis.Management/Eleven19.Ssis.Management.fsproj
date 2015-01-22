@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ConnectionStrings.fs" />
     <Compile Include="DataAccess.fs" />
+    <Compile Include="Repositories.fs" />
     <Compile Include="IntegrationServicesDomainObjects.fs" />
     <None Include="Script.fsx" />
     <None Include="paket.references" />
